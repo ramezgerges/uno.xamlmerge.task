@@ -3,50 +3,56 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Uno.UI.Tasks.BatchMerge;
 
-namespace Uno.XamlMerge.Tests;
-
-[TestClass]
-public class Given_GeneratePageListTask
+namespace Uno.XamlMerge.Tests
 {
-    [TestMethod]
-    public void When_Pages_Contains_MergedPages()
+
+    [TestClass]
+    public class Given_GeneratePageListTask
     {
-        GeneratePageList_v0 task = new();
+        [TestMethod]
+        public void When_Pages_Contains_MergedPages()
+        {
+            GeneratePageList_v0 task = new GeneratePageList_v0();
 
-        task.Pages = new[]{
-            new TaskItem("Generated\\Test1.xaml"),
-            new TaskItem("Generated\\Test2.xaml"),
-            new TaskItem("Generated\\Res1.xaml"),
-            new TaskItem("Generated\\Res2.xaml"),
-        };
-        task.MergedXamlFiles = new[]{
-            new TaskItem("Generated\\Test1.xaml"),
-            new TaskItem("Generated\\Test2.xaml"),
-        };
+            task.Pages = new[]
+            {
+                new TaskItem("Generated\\Test1.xaml"),
+                new TaskItem("Generated\\Test2.xaml"),
+                new TaskItem("Generated\\Res1.xaml"),
+                new TaskItem("Generated\\Res2.xaml"),
+            };
+            task.MergedXamlFiles = new[]
+            {
+                new TaskItem("Generated\\Test1.xaml"),
+                new TaskItem("Generated\\Test2.xaml"),
+            };
 
-        task.Execute();
+            task.Execute();
 
-        Assert.IsNotNull(task.OutputPages);
-        Assert.AreEqual(0, task.OutputPages.Length);
-    }
+            Assert.IsNotNull(task.OutputPages);
+            Assert.AreEqual(0, task.OutputPages.Length);
+        }
 
-    [TestMethod]
-    public void When_Pages_DoesNot_Contain_MergedPages()
-    {
-        GeneratePageList_v0 task = new();
+        [TestMethod]
+        public void When_Pages_DoesNot_Contain_MergedPages()
+        {
+            GeneratePageList_v0 task = new GeneratePageList_v0();
 
-        task.Pages = new[]{
-            new TaskItem("Generated\\Res1.xaml"),
-            new TaskItem("Generated\\Res2.xaml"),
-        };
-        task.MergedXamlFiles = new[]{
-            new TaskItem("Generated\\Test1.xaml"),
-            new TaskItem("Generated\\Test2.xaml"),
-        };
+            task.Pages = new[]
+            {
+                new TaskItem("Generated\\Res1.xaml"),
+                new TaskItem("Generated\\Res2.xaml"),
+            };
+            task.MergedXamlFiles = new[]
+            {
+                new TaskItem("Generated\\Test1.xaml"),
+                new TaskItem("Generated\\Test2.xaml"),
+            };
 
-        task.Execute();
+            task.Execute();
 
-        Assert.IsNotNull(task.OutputPages);
-        Assert.AreEqual(2, task.OutputPages.Length);
+            Assert.IsNotNull(task.OutputPages);
+            Assert.AreEqual(2, task.OutputPages.Length);
+        }
     }
 }
